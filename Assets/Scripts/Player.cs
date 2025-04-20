@@ -47,7 +47,18 @@ public class Player : MonoBehaviour
     {
         coin += amount;
         UpdateUI();
+        //セーブ機能（今回はOFFにする）
+        //SaveData();
     }
+
+    /*セーブ
+    public void SaveData()
+    {
+        PlayerPrefs.SetInt("coin", coin);
+        PlayerPrefs.SetInt("level", level);
+        PlayerPrefs.SetInt("kill", kill);
+    }
+    */
 
     public void OnPowerUp()
     {
@@ -58,6 +69,15 @@ public class Player : MonoBehaviour
             AddCoin(-require);
         }
     }
+
+    /*ロード
+    private void Awake()
+    {
+        coin = PlayerPrefs.GetInt("coin", coin);
+        level = PlayerPrefs.GetInt("level", level);
+        kill = PlayerPrefs.GetInt("kill", kill);
+    }
+    */
 
     void Start()
     {

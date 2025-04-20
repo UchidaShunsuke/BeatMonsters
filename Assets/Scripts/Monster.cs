@@ -17,6 +17,10 @@ public class Monster : MonoBehaviour
     private int maxHp;      //最大HP
     public Image monsterImage;  //画像を切り替えるコンポーネント
     public Sprite[] monsterImages;  //モンスターのリスト
+    public GameObject hitEffect;    //攻撃エフェクト
+    public GameObject coinEffect;   //コインエフェクト
+    public AudioClip coinSE;    //コイン効果音
+    public AudioSource audioSource; //オーディオソース
 
     //モンスターのHPを計算する
     private int CalcHp()
@@ -56,9 +60,19 @@ public class Monster : MonoBehaviour
         hp -= player.level;
         hpLabel.text = hp + "/" + maxHp;
 
+        //攻撃エフェクト
+        GameObject hit = Instantiate(hitEffect, transform.position, Quaternion.identity);
+        Destroy(hit, 0.5f);
+
         //もし死んでいたら
         if(hp <= 0)
         {
+            //コインの音を鳴らす
+            audioSource.PlayOneShot(coinSE);
+            //コインのエフェクトを出す
+            GameObject coin = Instantiate(coinEffect, transform.position, Quaternion.identity);
+            Destroy(coin, 3f);
+
             //プレイヤーの倒したモンスターの数を増やす
             player.kill++;
             //HPからコインの数を計算
